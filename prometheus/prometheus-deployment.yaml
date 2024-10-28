@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-server
+  namespace: observability
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-server
+  template:
+    metadata:
+      labels:
+        app: prometheus-server
+    spec:
+      containers:
+        - image: nginx:latest
+          imagePullPolicy: IfNotPresent
+          name: nginx-proxy
+          ports:
+          - containerPort: 80
+            name: proxy-http
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 30m
+              memory: 30Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+        - name: prometheus
+          image: prom/prometheus
+          env:
+            - name: WEB_ROUTE_PREFIX
+              value: /prometheus/
+            - name: WEB_EXTERNAL_URL
+              value: /prometheus/
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/prometheus
+      volumes:
+        - name: config-volume
+          configMap:
+            name: prometheus-server-conf
+            defaultMode: 420
+
