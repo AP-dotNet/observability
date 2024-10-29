@@ -34,7 +34,7 @@ spec:
             - name: WEB_ROUTE_PREFIX
               value: /prometheus/
             - name: WEB_EXTERNAL_URL
-              value: /prom/
+              value: /prometheus/
           ports:
             - containerPort: 9090
           volumeMounts:
