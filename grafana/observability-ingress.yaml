@@ -35,6 +35,6 @@ spec:
             name: prometheus-service
             port:
               number: 9090
-        path: /prometheus-srv(/|$)(.*)
+        path: /prom(/|$)(.*)
         pathType: Prefix
   ingressClassName: nginx

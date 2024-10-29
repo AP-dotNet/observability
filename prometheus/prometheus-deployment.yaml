@@ -32,9 +32,9 @@ spec:
           image: prom/prometheus
           env:
             - name: WEB_ROUTE_PREFIX
-              value: /prometheus-srv/
+              value: /prom/
             - name: WEB_EXTERNAL_URL
-              value: /prometheus-srv/
+              value: /prom/
           ports:
             - containerPort: 9090
           volumeMounts:
