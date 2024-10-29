@@ -32,7 +32,7 @@ spec:
           image: prom/prometheus
           env:
             - name: WEB_ROUTE_PREFIX
-              value: /prom/
+              value: /prometheus/
             - name: WEB_EXTERNAL_URL
               value: /prom/
           ports:
