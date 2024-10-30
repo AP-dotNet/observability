@@ -20,7 +20,7 @@ spec:
           emptyDir: {}
       containers:
         - name: elasticsearch
-          image: elasticsearch:7.17.1
+          image: elasticsearch:8.15.3
           ports:
             - containerPort: 9200
           volumeMounts:
