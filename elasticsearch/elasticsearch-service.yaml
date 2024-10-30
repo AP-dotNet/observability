@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: elasticsearch-srv
 spec:
-  type: LoadBalancer
-  selector:
+  selector: 
     app: elasticsearch
+  type: NodePort  
   ports:
-  - protocol: TCP
-    port: 9200
-    targetPort: 9200
+    - port: 9200
+      targetPort: 9200
+      nodePort: 31200
