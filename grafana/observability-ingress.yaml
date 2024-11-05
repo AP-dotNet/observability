@@ -37,4 +37,14 @@ spec:
               number: 9090
         path: /prometheus(/|$)(.*)
         pathType: Prefix
+  - host: elastic.192.168.50.243.nip.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: elasticsearch-service
+            port:
+              number: 9200
+        path: /
+        pathType: Prefix
   ingressClassName: nginx

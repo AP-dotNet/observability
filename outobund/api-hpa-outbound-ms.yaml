@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: outbound-hpa
+  namespace: outbound
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: outbound-api-ms
+  minReplicas: 1
+  maxReplicas: 15
+  targetCPUUtilizationPercentage: 80

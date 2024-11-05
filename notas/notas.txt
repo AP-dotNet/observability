@@ -1,0 +1,67 @@
+docker run -d -p 5701:5701 --net bridge --name hazelcast  hazelcast/hazelcast:4.1
+docker run -d --net bridge -p 49161:1521 -e ORACLE_ALLOW_REMOTE=true -e  ORACLE_PASSWORD=centos7 -v oracle-volume:/opt/oracle/oradata  gvenzl/oracle-xe
+
+
+******************
+******************
+******************
+
+Ver los pods del asistente virtual:
+kubectl get pods -n lucy-chatbot
+
+
+******************
+******************
+******************
+
+Reiniciar pod (nombre del pod): (Proporcionar el nombre del pod a reiniciar)
+Paso 1:  (ver los pod instalados para reiniciar)
+
+kubectl get pods -n lucy-chatbot | grep lucy-whatsapp-api-dinn-ms
+
+
+******************
+******************
+******************
+Paso 2 matar proceso del pod:
+
+kubectl delete pods lucy-front-reporteador-dinn-ms-848995ddc6-v9gpj -n lucy-chatbot
+kubectl delete pods lucy-whatsapp-api-dinn-ms-74f497cb48-kspgn -n lucy-chatbot
+kubectl delete pods lucy-whatsapp-api-dinn-ms-74f497cb48-nnx7x -n lucy-chatbot
+
+
+kubectl scale deployment lucy-outbound-api-actinver-ms  -n lucy-chatbot --replicas=0
+
+kubectl rollout restart deployment lucy-reporteador-api-dinn-ms -n lucy-chatbot | grep gcr 
+
+******************
+******************
+******************
+
+Ver logs de un pod:
+kubectl  -n observability logs -f prometheus-server-6d4c97b9f4-lmktb  
+
+Ver versión de imagen instalada: (Proporcionar el name del yaml)
+kubectl describe deployment  lucy-front-reporteador-dinn-ms -n lucy-chatbot | grep gcr
+
+Reiniciar namespace
+kubectl -n lucy-chatbot rollout restart deploy
+
+Entrar a pod
+
+kubectl exec lucy-front-reporteador-dinn-ms-c469c4897-5cfv5 -n lucy-chatbot  -- /bin/bash
+
+Describe POd
+
+kubectl describe pod node-exporter-k6lkz  -n observability
+
+
+kafka-topics --create --bootstrap-server localhost:9092 --topic test-topic 
+
+
+docker tag tw apdockerdotnet/tw
+docker push apdockerdotnet/tw
+
+
+kubectl rollout restart deployment  ingress-service-main-ms -n outbound
+

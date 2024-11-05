@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: lucy-twilio-ms
+  name: lucy-twilio-ms
+  namespace: outbound
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 30%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      name: service-twilio-ms
+  template:
+    metadata:
+      labels:
+        name: service-twilio-ms
+    spec:
+      containers:
+      - image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        name: nginx-proxy
+        ports:
+        - containerPort: 80
+          name: proxy-http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 15m
+            memory: 15Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        volumeMounts:
+        - mountPath: /etc/nginx/nginx.conf
+          name: nginx-proxy-config
+          subPath: nginx.conf
+      - args:
+        - dotnet
+        - WhatsappConnectorMicroservice.dll
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Production
+          - name: TZ
+            value: America/Costa_Rica
+        image: apdockerdotnet/tw
+        imagePullPolicy: Always
+        name: api
+        resources:
+          limits:
+            cpu: 80m
+            memory: 80Mi
+          requests:
+            cpu: 30m
+            memory: 30Mi
+        volumeMounts:
+        - name: appsettings
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+          readOnly: true
+        - name: templates
+          mountPath: /app/templates.json
+          subPath: templates.json
+          readOnly: true
+      volumes:
+      - configMap:
+          name: nginx-twilio-map
+        name: nginx-proxy-config
+      - name: appsettings
+        secret:
+          secretName: secret-appsettings-twilio
+      - name: templates
+        secret:
+          secretName: secret-templates-twilio
