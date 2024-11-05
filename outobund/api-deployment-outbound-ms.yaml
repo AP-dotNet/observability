@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: outbound-api-ms
+  name: outbound-api-ms
+  namespace: outbound
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: service-outbound-api-ms
+  template:
+    metadata:
+      labels:
+        name: service-outbound-api-ms
+    spec:
+      containers:
+      - image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        name: nginx-proxy
+        ports:
+        - containerPort: 80
+          name: proxy-http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 30m
+            memory: 30Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        volumeMounts:
+        - mountPath: /etc/nginx/nginx.conf
+          name: nginx-proxy-config
+          subPath: nginx.conf
+      - args:
+        - dotnet
+        - MainMicroservice.dll
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Production
+          - name: TZ
+            value: America/Costa_Rica
+        image: apdockerdotnet/out-api
+        imagePullPolicy: Always
+        name: api
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        volumeMounts:
+        - name: appsettings
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+          readOnly: true
+        - name: users
+          mountPath: /app/users.json
+          subPath: users.json
+          readOnly: true
+      volumes:
+      - configMap:
+          name: nginx-outbound-api-map
+        name: nginx-proxy-config
+      - name: appsettings
+        secret:
+          secretName: secret-appsettings-outbound-api
+      - name: users
+        secret:
+          secretName: secret-users-outbound-api

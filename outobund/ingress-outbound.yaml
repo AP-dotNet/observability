@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service-main-ms
+  namespace: outbound
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /AsistenteVirtualOutbound
+        pathType: Prefix
+        backend:
+          service:
+            name: service-outbound-api-ms
+            port:
+              number: 80
+  - host: localhost
+    http:
+      paths:
+      - path: /oracle
+        pathType: Prefix
+        backend:
+          service:
+            name: outbound-service-oracle-ms
+            port:
+              number: 80
+  - host: localhost
+    http:
+      paths:
+      - path: /AsistenteVirtualLocal
+        pathType: Prefix
+        backend:
+          service:
+            name: service-main-actinver-ms
+            port:
+              number: 80
+  ingressClassName: nginx

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scripts-cm
+  namespace: outbound
+data:
+  locustfile.py: |
+    import time
+    from locust import HttpUser, task
+
+    class QuickstartUser(HttpUser):
+        @task
+        def hello_world(self):
+            self.client.get("/AsistenteVirtualOutbound/api/v1/outbound/getUser?user_id=apineda")
