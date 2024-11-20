@@ -19,7 +19,7 @@ spec:
         - name: SERVER_BASEPATH
           value: "/kibana"
         - name: SERVER_REWRITEBASEPATH
-          value: "/false"
+          value: false
         - name: ELASTICSEARCH_URL
           value: http://elastic.192.168.50.243.nip.io
         - name: XPACK_SECURITY_ENABLED
