@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: elastic.localhost.nip.io
+  - host: elastic.192.168.50.135.nip.io
     http:
       paths:
       - backend:
