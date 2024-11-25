@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: observability-ingress
+  namespace: observability
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: locust.localhost.nip.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: locust-master
+            port:
+              number: 8089
+        path: /locust(/|$)(.*)
+        pathType: Prefix
+  ingressClassName: nginx
