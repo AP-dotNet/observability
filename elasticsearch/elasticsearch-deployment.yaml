@@ -2,15 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: elasticsearch-deployment
+  namespace: observability
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: elasticsearch
+      component: srv-elasticsearch
   template:
     metadata:
       labels:
-        component: elasticsearch
+        component: srv-elasticsearch
     spec:
       volumes:
         - name: data

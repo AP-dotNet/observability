@@ -2,9 +2,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: elasticsearch-pv-claim
+  namespace: observability
 spec:
   accessModes:
     - ReadWriteOnce 
   resources:
     requests:
-      storage: 5Gi
+      storage: 2Gi
