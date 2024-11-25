@@ -6,7 +6,7 @@ metadata:
   labels:
     component: kibana
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     component: kibana
   ports:
