@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: elasticsearch
-  labels:
-    component: elasticsearch
+  name: elasticsearch-service
+  namespace: observability
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
-    component: elasticsearch
+    component: srv-elasticsearch
   ports:
   - port: 9200
     targetPort: 9200
