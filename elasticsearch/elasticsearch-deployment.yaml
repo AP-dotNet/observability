@@ -32,11 +32,11 @@ spec:
           mountPath: /usr/share/elasticsearch/data
         resources:
           limits:
-            cpu: 200m
-            memory: 300Mi
+            cpu: 500m
+            memory: 1Gi
           requests:
-            cpu: 200m
-            memory: 300Mi
+            cpu: 500m
+            memory: 1Gi
       # Allow non-root user to access PersistentVolume
       securityContext:
         fsGroup: 1000
