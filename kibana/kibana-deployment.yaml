@@ -30,13 +30,6 @@ spec:
             secretKeyRef:
               name: kibana-secret-user-elastic
               key: password
-          volumeMounts:
-            - name: secret-volume
-              mountPath: /etc/secret
-        volumes:
-        - name: secret-volume
-          secret:
-            secretName: kibana-secret-user-elastic
         ports:
         - containerPort: 5601
           name: http
