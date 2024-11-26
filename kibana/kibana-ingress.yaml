@@ -4,10 +4,10 @@ metadata:
   name: kibana-ingress
   namespace: observability
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: kibana.192.168.50.135.nip.io
+  - host: kibana.localhost.nip.io
     http:
       paths:
       - backend:
