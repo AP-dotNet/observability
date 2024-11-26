@@ -17,22 +17,26 @@ spec:
         image: docker.elastic.co/kibana/kibana:7.12.0
         env:
         - name: ELASTICSEARCH_URL
-          value: http://elastic.192.168.50.243.nip.io
+          value: http://elastic.192.168.50.135.nip.io/
         - name: XPACK_SECURITY_ENABLED
           value: "true"
         - name: ELASTICSEARCH_USERNAME
           valueFrom:
-            configMapKeyRef:
-              name: kibana-config
-              key: elasticsearch_username
+            secretKeyRef:
+              name: kibana-secret-user-elastic
+              key: username
         - name: ELASTICSEARCH_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              name: kibana-config
-              key: elasticsearch_password
-        envFrom:
-        - configMapRef:
-            name: kibana-config
+            secretKeyRef:
+              name: kibana-secret-user-elastic
+              key: password
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /etc/secret
+        volumes:
+        - name: secret-volume
+          secret:
+            secretName: kibana-secret-user-elastic
         ports:
         - containerPort: 5601
           name: http
