@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: argocd-observability.10.84.103.212.nip.io
+  - host: argocd.10.84.103.212.nip.io
     http:
       paths:
       - path: /
