@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: management
+  labels:
+    app.kubernetes.io/name: management
+    app.kubernetes.io/instance: management

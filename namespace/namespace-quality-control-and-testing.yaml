@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quality-control-and-testing
+  labels:
+    app.kubernetes.io/name: quality-control-and-testing
+    app.kubernetes.io/instance: quality-control-and-testing
