@@ -15,6 +15,9 @@ spec:
     type: elasticsearch
     options:
       es:
-        server-urls: http://elasticsearch:9200
+        server-urls: http://elasticsearch.observability:9200
         username: elastic
-        password: changeme
+        password: SiCgjcs0GLkHBs9vOTVu
+      cmdlineParams:
+        es.tls.enabled: true
+        es.tls.skip-host-verify: true

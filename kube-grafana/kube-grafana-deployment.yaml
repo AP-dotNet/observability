@@ -1,0 +1,129 @@
+# Source: cost-analyzer/templates/grafana-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubecost-grafana
+  namespace: observability
+  labels:
+    app: grafana
+    release: kubecost
+    heritage: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+      release: kubecost
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: grafana
+        release: kubecost
+    spec:
+      serviceAccountName: kubecost-grafana
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 1001
+        runAsNonRoot: true
+        runAsUser: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: grafana-sc-dashboard
+          image: "ghcr.io/kiwigrid/k8s-sidecar:1.28.0"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+          env:
+            - name: LABEL
+              value: "grafana_dashboard"
+            - name: FOLDER
+              value: "/tmp/dashboards"
+            - name: ERROR_THROTTLE_SLEEP
+              value: "0"
+          volumeMounts:
+            - name: sc-dashboard-volume
+              mountPath: "/tmp/dashboards"
+        - name: grafana
+          image: "grafana/grafana:10.4.3"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/grafana/grafana.ini"
+              subPath: grafana.ini
+            - name: ldap
+              mountPath: "/etc/grafana/ldap.toml"
+              subPath: ldap.toml
+            - name: config
+              mountPath: "/etc/grafana/provisioning/datasources/datasources.yaml"
+              subPath: datasources.yaml
+            - name: sc-dashboard-volume
+              mountPath: "/tmp/dashboards"
+            - name: sc-dashboard-provider
+              mountPath: "/etc/grafana/provisioning/dashboards/sc-dashboardproviders.yaml"
+              subPath: provider.yaml
+            - name: storage
+              mountPath: "/var/lib/grafana"
+          ports:
+            - name: service
+              containerPort: 80
+              protocol: TCP
+            - name: grafana
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: GF_SECURITY_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: kubecost-grafana
+                  key: admin-user
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kubecost-grafana
+                  key: admin-password
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 60
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+          resources:
+            {}
+      volumes:
+        - name: config
+          configMap:
+            name: kubecost-grafana
+        - name: ldap
+          secret:
+            secretName: kubecost-grafana
+            items:
+              - key: ldap-toml
+                path: ldap.toml
+        - name: storage
+          emptyDir: {}
+        - name: sc-dashboard-volume
+          emptyDir: {}
+        - name: sc-dashboard-provider
+          configMap:
+            name: kubecost-grafana-config-dashboards

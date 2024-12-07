@@ -1,20 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kibana-ingress
-  namespace: observability
+  name: kube-ingress
+  namespace: management
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: kibana.158.23.246.19.nip.io
+  - host: kubecost.158.23.246.19.nip.io
     http:
       paths:
       - backend:
           service:
-            name: kibana
+            name: kubecost-cost-analyzer
             port:
-              number: 5601
+              number: 9090
         path: /
         pathType: Prefix
   ingressClassName: nginx

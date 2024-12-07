@@ -1,0 +1,22 @@
+# Source: cost-analyzer/templates/grafana-configmap-dashboard-provider.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: grafana
+    release: kubecost
+    heritage: Helm
+  name: kubecost-grafana-config-dashboards
+  namespace: observability
+data:
+  provider.yaml: |-
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      options:
+        path: /tmp/dashboards
+---

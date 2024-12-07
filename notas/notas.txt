@@ -30,16 +30,17 @@ kubectl delete pods lucy-whatsapp-api-dinn-ms-74f497cb48-kspgn -n lucy-chatbot
 kubectl delete pods lucy-whatsapp-api-dinn-ms-74f497cb48-nnx7x -n lucy-chatbot
 
 
-kubectl scale deployment lucy-outbound-api-actinver-ms  -n lucy-chatbot --replicas=0
+kubectl scale deployment elasticsearch  -n observability --replicas=0
 
-kubectl rollout restart deployment lucy-reporteador-api-dinn-ms -n lucy-chatbot | grep gcr 
+kubectl rollout restart deployment kibana -n observability | grep gcr 
 
+  kubectl rollout restart deployment -n test-namespace
 ******************
 ******************
 ******************
 
 Ver logs de un pod:
-kubectl  -n observability logs -f prometheus-server-6d4c97b9f4-lmktb  
+kubectl  -n observability logs -f elasticsearch-0  
 
 Ver versión de imagen instalada: (Proporcionar el name del yaml)
 kubectl describe deployment  lucy-front-reporteador-dinn-ms -n lucy-chatbot | grep gcr
@@ -49,7 +50,7 @@ kubectl -n lucy-chatbot rollout restart deploy
 
 Entrar a pod
 
-kubectl exec lucy-front-reporteador-dinn-ms-c469c4897-5cfv5 -n lucy-chatbot  -- /bin/bash
+kubectl exec elasticsearch-0 -n observability  -- /bin/bash
 
 Describe POd
 
@@ -64,4 +65,57 @@ docker push apdockerdotnet/tw
 
 
 kubectl rollout restart deployment  ingress-service-main-ms -n outbound
+
+
+deploy de servicios en namespaces requeridos en cluster kubernetes 
+
+ejecutar yamls para creacion de namesapace 
+kubectl apply -f .\namespace\
+
+ejecutar yamls de deploy ingress ns ingress 
+
+kubectl apply -f .\ingress\
+
+ejecutar  yamls de deploy para argoCD ns management
+
+modificar ingress
+kubectl apply -f .\argocd\ -n management
+ejecutar el comando para obtencion de credencialles argocd.exe admin initial-password -n argocd, se reuiere cli argocd  
+
+
+
+
+deploy servicio prometheus  ns observability
+    modificar ingress para ruta de prometheus
+    ejecutar despliegue mediante argoCD y repositorio git
+
+deploy servicio grafana  ns observability
+    modificar ingress para ruta de grafana
+    ejecutar despliegue mediante argoCD y repositorio git
+
+deploy servicio elastic ns observability
+    modificar ingress para ruta de elastic
+    ejecutar despliegue mediante argoCD y repositorio git
+    ejecutar el comando para obtencion de credenciales  $ kubectl exec -it elasticsearch-0 -n observability -- bin/elasticsearch-setup-passwords auto -b
+    SiCgjcs0GLkHBs9vOTVu
+deploy servicio jaeger ns observability
+    modificar ingress para ruta de jaeger
+    actualizar la ruta de elasticsearch en el archivo jeager-kind.yaml
+    ejecutar despliegue mediante argoCD y repositorio git
+
+deploy servicio kibana ns observability
+    modificar ingress para ruta de jaeger
+    actualizar la ruta de elasticsearch en el archivo kibana-deployment.yaml
+    actualizar credenciales de elastic en kibana-secret-user-elastic.yaml
+    ejecutar despliegue mediante argoCD y repositorio git
+
+
+
+
+    
+
+
+
+
+
 

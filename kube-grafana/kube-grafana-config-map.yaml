@@ -1,0 +1,44 @@
+# Source: cost-analyzer/templates/grafana-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubecost-grafana
+  namespace: observability
+  labels:
+    app: grafana
+    release: kubecost
+    heritage: Helm
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+    [auth.anonymous]
+    enabled = true
+    org_name = Main Org.
+    org_role = Editor
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    [paths]
+    data = /var/lib/grafana/data
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+    [server]
+    root_url = "https://%(domain)s/grafana/"
+    serve_from_sub_path = true
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+    - access: proxy
+      isDefault: true
+      name: Prometheus
+      type: prometheus
+      url: http://prometheus.158.23.246.19.nip.io/
+      jsonData:
+        httpMethod: POST
+        prometheusType: Prometheus
+        prometheusVersion: 2.35.0
+        timeInterval: 1m
+---

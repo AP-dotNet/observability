@@ -1,0 +1,12 @@
+# Source: cost-analyzer/templates/prometheus-server-serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    component: "server"
+    app: prometheus
+    release: kubecost
+    heritage: Helm
+  name: kubecost-prometheus-server
+  namespace: observability
+---

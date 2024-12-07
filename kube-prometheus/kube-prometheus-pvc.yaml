@@ -1,0 +1,18 @@
+---
+# Source: cost-analyzer/templates/prometheus-server-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    component: "server"
+    app: prometheus
+    release: kubecost
+    heritage: Helm
+  name: kubecost-prometheus-server
+  namespace: observability
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "32Gi"

@@ -1,13 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: observability-ingress
-  namespace: observability
+  name: locust-ingress
+  namespace: quality-control-and-testing
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: locust.localhost.nip.io
+  - host: locust.158.23.246.19.nip.io
     http:
       paths:
       - backend:

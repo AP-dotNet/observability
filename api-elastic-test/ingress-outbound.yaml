@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service-main-ms
+  namespace: test
+spec:
+  rules:
+  - host: api-elastic.158.23.246.19.nip.io
+    http:
+      paths:
+      - path: /WeatherForecast
+        pathType: Prefix
+        backend:
+          service:
+            name: service-outbound-api-ms
+            port:
+              number: 80
+  ingressClassName: nginx
