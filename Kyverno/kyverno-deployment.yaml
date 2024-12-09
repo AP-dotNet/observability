@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kyverno
+  name: management
   labels:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
@@ -12,7 +12,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kyverno-admission-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: admission-controller
     app.kubernetes.io/instance: kyverno
@@ -23,7 +23,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kyverno-background-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: background-controller
     app.kubernetes.io/instance: kyverno
@@ -34,7 +34,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kyverno-cleanup-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: cleanup-controller
     app.kubernetes.io/instance: kyverno
@@ -45,7 +45,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kyverno-cleanup-jobs
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
@@ -55,7 +55,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kyverno-reports-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: reports-controller
     app.kubernetes.io/instance: kyverno
@@ -66,7 +66,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kyverno
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: config
     app.kubernetes.io/instance: kyverno
@@ -78,7 +78,7 @@ data:
   generateSuccessEvents: "false"
   excludeGroups: "system:nodes"
   resourceFilters: >-
-    [*/*,kyverno,*]
+    [*/*,management,*]
     [Event,*,*]
     [*/*,kube-system,*]
     [*/*,kube-public,*]
@@ -118,83 +118,83 @@ data:
     [ClusterRoleBinding,*,kyverno:background-controller]
     [ClusterRoleBinding,*,kyverno:cleanup-controller]
     [ClusterRoleBinding,*,kyverno:reports-controller]
-    [ServiceAccount,kyverno,kyverno-admission-controller]
-    [ServiceAccount/*,kyverno,kyverno-admission-controller]
-    [ServiceAccount,kyverno,kyverno-background-controller]
-    [ServiceAccount/*,kyverno,kyverno-background-controller]
-    [ServiceAccount,kyverno,kyverno-cleanup-controller]
-    [ServiceAccount/*,kyverno,kyverno-cleanup-controller]
-    [ServiceAccount,kyverno,kyverno-reports-controller]
-    [ServiceAccount/*,kyverno,kyverno-reports-controller]
-    [Role,kyverno,kyverno:admission-controller]
-    [Role,kyverno,kyverno:background-controller]
-    [Role,kyverno,kyverno:cleanup-controller]
-    [Role,kyverno,kyverno:reports-controller]
-    [RoleBinding,kyverno,kyverno:admission-controller]
-    [RoleBinding,kyverno,kyverno:background-controller]
-    [RoleBinding,kyverno,kyverno:cleanup-controller]
-    [RoleBinding,kyverno,kyverno:reports-controller]
-    [ConfigMap,kyverno,kyverno]
-    [ConfigMap,kyverno,kyverno-metrics]
-    [Deployment,kyverno,kyverno-admission-controller]
-    [Deployment/*,kyverno,kyverno-admission-controller]
-    [Deployment,kyverno,kyverno-background-controller]
-    [Deployment/*,kyverno,kyverno-background-controller]
-    [Deployment,kyverno,kyverno-cleanup-controller]
-    [Deployment/*,kyverno,kyverno-cleanup-controller]
-    [Deployment,kyverno,kyverno-reports-controller]
-    [Deployment/*,kyverno,kyverno-reports-controller]
-    [Pod,kyverno,kyverno-admission-controller-*]
-    [Pod/*,kyverno,kyverno-admission-controller-*]
-    [Pod,kyverno,kyverno-background-controller-*]
-    [Pod/*,kyverno,kyverno-background-controller-*]
-    [Pod,kyverno,kyverno-cleanup-controller-*]
-    [Pod/*,kyverno,kyverno-cleanup-controller-*]
-    [Pod,kyverno,kyverno-reports-controller-*]
-    [Pod/*,kyverno,kyverno-reports-controller-*]
-    [Job,kyverno,kyverno-hook-pre-delete]
-    [Job/*,kyverno,kyverno-hook-pre-delete]
-    [NetworkPolicy,kyverno,kyverno-admission-controller]
-    [NetworkPolicy/*,kyverno,kyverno-admission-controller]
-    [NetworkPolicy,kyverno,kyverno-background-controller]
-    [NetworkPolicy/*,kyverno,kyverno-background-controller]
-    [NetworkPolicy,kyverno,kyverno-cleanup-controller]
-    [NetworkPolicy/*,kyverno,kyverno-cleanup-controller]
-    [NetworkPolicy,kyverno,kyverno-reports-controller]
-    [NetworkPolicy/*,kyverno,kyverno-reports-controller]
-    [PodDisruptionBudget,kyverno,kyverno-admission-controller]
-    [PodDisruptionBudget/*,kyverno,kyverno-admission-controller]
-    [PodDisruptionBudget,kyverno,kyverno-background-controller]
-    [PodDisruptionBudget/*,kyverno,kyverno-background-controller]
-    [PodDisruptionBudget,kyverno,kyverno-cleanup-controller]
-    [PodDisruptionBudget/*,kyverno,kyverno-cleanup-controller]
-    [PodDisruptionBudget,kyverno,kyverno-reports-controller]
-    [PodDisruptionBudget/*,kyverno,kyverno-reports-controller]
-    [Service,kyverno,kyverno-svc]
-    [Service/*,kyverno,kyverno-svc]
-    [Service,kyverno,kyverno-svc-metrics]
-    [Service/*,kyverno,kyverno-svc-metrics]
-    [Service,kyverno,kyverno-background-controller-metrics]
-    [Service/*,kyverno,kyverno-background-controller-metrics]
-    [Service,kyverno,kyverno-cleanup-controller]
-    [Service/*,kyverno,kyverno-cleanup-controller]
-    [Service,kyverno,kyverno-cleanup-controller-metrics]
-    [Service/*,kyverno,kyverno-cleanup-controller-metrics]
-    [Service,kyverno,kyverno-reports-controller-metrics]
-    [Service/*,kyverno,kyverno-reports-controller-metrics]
-    [ServiceMonitor,kyverno,kyverno-admission-controller]
-    [ServiceMonitor,kyverno,kyverno-background-controller]
-    [ServiceMonitor,kyverno,kyverno-cleanup-controller]
-    [ServiceMonitor,kyverno,kyverno-reports-controller]
-    [Secret,kyverno,kyverno-svc.kyverno.svc.*]
-    [Secret,kyverno,kyverno-cleanup-controller.kyverno.svc.*]
-  webhooks: '[{"namespaceSelector": {"matchExpressions": [{"key":"kubernetes.io/metadata.name","operator":"NotIn","values":["kyverno"]}]}}]'
+    [ServiceAccount,management,kyverno-admission-controller]
+    [ServiceAccount/*,management,kyverno-admission-controller]
+    [ServiceAccount,management,kyverno-background-controller]
+    [ServiceAccount/*,management,kyverno-background-controller]
+    [ServiceAccount,management,kyverno-cleanup-controller]
+    [ServiceAccount/*,management,kyverno-cleanup-controller]
+    [ServiceAccount,management,kyverno-reports-controller]
+    [ServiceAccount/*,management,kyverno-reports-controller]
+    [Role,management,kyverno:admission-controller]
+    [Role,management,kyverno:background-controller]
+    [Role,management,kyverno:cleanup-controller]
+    [Role,management,kyverno:reports-controller]
+    [RoleBinding,management,kyverno:admission-controller]
+    [RoleBinding,management,kyverno:background-controller]
+    [RoleBinding,management,kyverno:cleanup-controller]
+    [RoleBinding,management,kyverno:reports-controller]
+    [ConfigMap,management,kyverno]
+    [ConfigMap,management,kyverno-metrics]
+    [Deployment,management,kyverno-admission-controller]
+    [Deployment/*,management,kyverno-admission-controller]
+    [Deployment,management,kyverno-background-controller]
+    [Deployment/*,management,kyverno-background-controller]
+    [Deployment,management,kyverno-cleanup-controller]
+    [Deployment/*,management,kyverno-cleanup-controller]
+    [Deployment,management,kyverno-reports-controller]
+    [Deployment/*,management,kyverno-reports-controller]
+    [Pod,management,kyverno-admission-controller-*]
+    [Pod/*,management,kyverno-admission-controller-*]
+    [Pod,management,kyverno-background-controller-*]
+    [Pod/*,management,kyverno-background-controller-*]
+    [Pod,management,kyverno-cleanup-controller-*]
+    [Pod/*,management,kyverno-cleanup-controller-*]
+    [Pod,management,kyverno-reports-controller-*]
+    [Pod/*,management,kyverno-reports-controller-*]
+    [Job,management,kyverno-hook-pre-delete]
+    [Job/*,management,kyverno-hook-pre-delete]
+    [NetworkPolicy,management,kyverno-admission-controller]
+    [NetworkPolicy/*,management,kyverno-admission-controller]
+    [NetworkPolicy,management,kyverno-background-controller]
+    [NetworkPolicy/*,management,kyverno-background-controller]
+    [NetworkPolicy,management,kyverno-cleanup-controller]
+    [NetworkPolicy/*,management,kyverno-cleanup-controller]
+    [NetworkPolicy,management,kyverno-reports-controller]
+    [NetworkPolicy/*,management,kyverno-reports-controller]
+    [PodDisruptionBudget,management,kyverno-admission-controller]
+    [PodDisruptionBudget/*,management,kyverno-admission-controller]
+    [PodDisruptionBudget,management,kyverno-background-controller]
+    [PodDisruptionBudget/*,management,kyverno-background-controller]
+    [PodDisruptionBudget,management,kyverno-cleanup-controller]
+    [PodDisruptionBudget/*,management,kyverno-cleanup-controller]
+    [PodDisruptionBudget,management,kyverno-reports-controller]
+    [PodDisruptionBudget/*,management,kyverno-reports-controller]
+    [Service,management,kyverno-svc]
+    [Service/*,management,kyverno-svc]
+    [Service,management,kyverno-svc-metrics]
+    [Service/*,management,kyverno-svc-metrics]
+    [Service,management,kyverno-background-controller-metrics]
+    [Service/*,management,kyverno-background-controller-metrics]
+    [Service,management,kyverno-cleanup-controller]
+    [Service/*,management,kyverno-cleanup-controller]
+    [Service,management,kyverno-cleanup-controller-metrics]
+    [Service/*,management,kyverno-cleanup-controller-metrics]
+    [Service,management,kyverno-reports-controller-metrics]
+    [Service/*,management,kyverno-reports-controller-metrics]
+    [ServiceMonitor,management,kyverno-admission-controller]
+    [ServiceMonitor,management,kyverno-background-controller]
+    [ServiceMonitor,management,kyverno-cleanup-controller]
+    [ServiceMonitor,management,kyverno-reports-controller]
+    [Secret,management,kyverno-svc.management.svc.*]
+    [Secret,management,kyverno-cleanup-controller.management.svc.*]
+  webhooks: '[{"namespaceSelector": {"matchExpressions": [{"key":"kubernetes.io/metadata.name","operator":"NotIn","values":["management"]}]}}]'
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kyverno-metrics
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: config
     app.kubernetes.io/instance: kyverno
@@ -44763,7 +44763,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kyverno-admission-controller
-    namespace: kyverno
+    namespace: management
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -44781,7 +44781,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kyverno-background-controller
-  namespace: kyverno
+  namespace: management
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -44799,7 +44799,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kyverno-cleanup-controller
-  namespace: kyverno
+  namespace: management
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -44816,7 +44816,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kyverno-cleanup-jobs
-    namespace: kyverno
+    namespace: management
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -44834,13 +44834,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kyverno-reports-controller
-  namespace: kyverno
+  namespace: management
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: kyverno:admission-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: admission-controller
     app.kubernetes.io/instance: kyverno
@@ -44898,7 +44898,7 @@ metadata:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: v1.11.1
-  namespace: kyverno
+  namespace: management
 rules:
   - apiGroups:
       - ''
@@ -44946,7 +44946,7 @@ metadata:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: v1.11.1
-  namespace: kyverno
+  namespace: management
 rules:
   - apiGroups:
       - ''
@@ -44965,8 +44965,8 @@ rules:
       - update
       - watch
     resourceNames:
-      - kyverno-cleanup-controller.kyverno.svc.kyverno-tls-ca
-      - kyverno-cleanup-controller.kyverno.svc.kyverno-tls-pair
+      - kyverno-cleanup-controller.management.svc.kyverno-tls-ca
+      - kyverno-cleanup-controller.management.svc.kyverno-tls-pair
   - apiGroups:
       - ''
     resources:
@@ -45005,7 +45005,7 @@ metadata:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: v1.11.1
-  namespace: kyverno
+  namespace: management
 rules:
   - apiGroups:
       - ''
@@ -45040,7 +45040,7 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kyverno:admission-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: admission-controller
     app.kubernetes.io/instance: kyverno
@@ -45053,7 +45053,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kyverno-admission-controller
-    namespace: kyverno
+    namespace: management
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -45064,7 +45064,7 @@ metadata:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: v1.11.1
-  namespace: kyverno
+  namespace: management
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -45072,7 +45072,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kyverno-background-controller
-    namespace: kyverno
+    namespace: management
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -45083,7 +45083,7 @@ metadata:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: v1.11.1
-  namespace: kyverno
+  namespace: management
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -45091,7 +45091,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kyverno-cleanup-controller
-    namespace: kyverno
+    namespace: management
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -45102,7 +45102,7 @@ metadata:
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: v1.11.1
-  namespace: kyverno
+  namespace: management
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -45110,13 +45110,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: kyverno-reports-controller
-    namespace: kyverno
+    namespace: management
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: kyverno-svc
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: admission-controller
     app.kubernetes.io/instance: kyverno
@@ -45138,7 +45138,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kyverno-svc-metrics
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: admission-controller
     app.kubernetes.io/instance: kyverno
@@ -45160,7 +45160,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kyverno-background-controller-metrics
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: background-controller
     app.kubernetes.io/instance: kyverno
@@ -45182,7 +45182,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kyverno-cleanup-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: cleanup-controller
     app.kubernetes.io/instance: kyverno
@@ -45204,7 +45204,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kyverno-cleanup-controller-metrics
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: cleanup-controller
     app.kubernetes.io/instance: kyverno
@@ -45226,7 +45226,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kyverno-reports-controller-metrics
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: reports-controller
     app.kubernetes.io/instance: kyverno
@@ -45248,7 +45248,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kyverno-admission-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: admission-controller
     app.kubernetes.io/instance: kyverno
@@ -45336,8 +45336,8 @@ spec:
           image: "ghcr.io/kyverno/kyverno:v1.11.1"
           imagePullPolicy: IfNotPresent
           args:
-            - --caSecretName=kyverno-svc.kyverno.svc.kyverno-tls-ca
-            - --tlsSecretName=kyverno-svc.kyverno.svc.kyverno-tls-pair
+            - --caSecretName=kyverno-svc.management.svc.kyverno-tls-ca
+            - --tlsSecretName=kyverno-svc.management.svc.kyverno-tls-pair
             - --backgroundServiceAccountName=system:serviceaccount:kyverno:kyverno-background-controller
             - --servicePort=443
             - --disableMetrics=false
@@ -45439,7 +45439,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kyverno-background-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: background-controller
     app.kubernetes.io/instance: kyverno
@@ -45537,7 +45537,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kyverno-cleanup-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: cleanup-controller
     app.kubernetes.io/instance: kyverno
@@ -45589,8 +45589,8 @@ spec:
             name: metrics
             protocol: TCP
           args:
-            - --caSecretName=kyverno-cleanup-controller.kyverno.svc.kyverno-tls-ca
-            - --tlsSecretName=kyverno-cleanup-controller.kyverno.svc.kyverno-tls-pair
+            - --caSecretName=kyverno-cleanup-controller.management.svc.kyverno-tls-ca
+            - --tlsSecretName=kyverno-cleanup-controller.management.svc.kyverno-tls-pair
             - --servicePort=443
             - --disableMetrics=false
             - --otelConfig=prometheus
@@ -45668,7 +45668,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kyverno-reports-controller
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: reports-controller
     app.kubernetes.io/instance: kyverno
@@ -45785,7 +45785,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: kyverno-cleanup-admission-reports
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: cleanup
     app.kubernetes.io/instance: kyverno
@@ -45833,7 +45833,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: kyverno-cleanup-cluster-admission-reports
-  namespace: kyverno
+  namespace: management
   labels:
     app.kubernetes.io/component: cleanup
     app.kubernetes.io/instance: kyverno
