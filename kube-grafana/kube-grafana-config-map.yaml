@@ -35,7 +35,7 @@ data:
       isDefault: true
       name: Prometheus
       type: prometheus
-      url: http://prometheus.158.23.251.48.nip.io/
+      url: http://prometheus.192.168.50.135.nip.io/
       jsonData:
         httpMethod: POST
         prometheusType: Prometheus

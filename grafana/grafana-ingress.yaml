@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: grafana.158.23.251.48.nip.io
+  - host: grafana.192.168.50.135.nip.io
     http:
       paths:
       - backend:
