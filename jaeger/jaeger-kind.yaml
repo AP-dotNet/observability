@@ -17,7 +17,7 @@ spec:
       es:
         server-urls: http://elasticsearch.observability:9200
         username: elastic
-        password: SiCgjcs0GLkHBs9vOTVu
+        password: aeFhyzK1El6ZNcm7ArCa
       cmdlineParams:
         es.tls.enabled: true
         es.tls.skip-host-verify: true
