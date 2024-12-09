@@ -22592,7 +22592,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-application-controller
-  namespace: observability
+  namespace: management
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -22609,7 +22609,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-applicationset-controller
-  namespace: observability
+  namespace: management
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -22626,7 +22626,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argocd-server
-  namespace: observability
+  namespace: management
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -22643,6 +22643,8 @@ metadata:
     app.kubernetes.io/name: argocd-cmd-params-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-cmd-params-cm
+data:
+  application.namespaces: management
 ---
 apiVersion: v1
 kind: ConfigMap
