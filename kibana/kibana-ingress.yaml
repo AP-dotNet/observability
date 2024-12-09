@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: kibana.158.23.246.19.nip.io
+  - host: kibana.158.23.251.48.nip.io
     http:
       paths:
       - backend:
