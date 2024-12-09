@@ -11,7 +11,7 @@ data:
     class QuickstartUser(HttpUser):
         @task
         def getUser(self):
-            self.client.get("http://api-elastic.192.168.50.135.nip.io/WeatherForecast/")
+            self.client.get("http://api-elastic.158.23.251.48.nip.io/WeatherForecast/")
   locustfile2.py: |
     import time
     from locust import HttpUser, task
