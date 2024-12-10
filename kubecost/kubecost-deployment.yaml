@@ -30,8 +30,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app: cost-analyzer
 data:
-    prometheus-alertmanager-endpoint: http://prometheus-service.observability:9090
-    prometheus-server-endpoint: http://prometheus-service.observability:9090
+    prometheus-alertmanager-endpoint: http://prometheus.158.23.251.48.nip.io/
+    prometheus-server-endpoint: http://prometheus.158.23.251.48.nip.io/
     kubecost-token: not-applied
 ---
 # Source: cost-analyzer/templates/cost-analyzer-frontend-config-map-template.yaml
