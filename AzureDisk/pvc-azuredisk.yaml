@@ -2,11 +2,12 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pvc-azuredisk
+  namespace: observability
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 5Gi
   volumeName: pv-azuredisk
   storageClassName: managed-csi

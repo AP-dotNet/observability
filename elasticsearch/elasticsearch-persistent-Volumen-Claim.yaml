@@ -6,10 +6,10 @@ metadata:
   labels:
     component: elasticsearch
 spec:
-  volumeMode: Filesystem
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
-  # storageClassName: custom-persistent-volumen-retain
+      storage: 5Gi
+  volumeName: pv-azuredisk
+  storageClassName: managed-csi

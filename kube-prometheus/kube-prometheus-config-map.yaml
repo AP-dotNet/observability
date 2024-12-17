@@ -167,7 +167,7 @@ data:
 
     # - job_name: 'elasticsearch'
     #       static_configs:
-    #       targets: ['http://elastic.158.23.251.48.nip.io:<elasticsearch_exporter_port>']
+    #       targets: ['http://elastic.158.23.255.223.nip.io:<elasticsearch_exporter_port>']
 
     # Example scrape config for probing ingresses via the Blackbox Exporter.
     #

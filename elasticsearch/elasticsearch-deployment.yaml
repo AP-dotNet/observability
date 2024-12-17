@@ -52,4 +52,4 @@ spec:
           name: elasticsearch-config
       - name: elasticsearch-data
         persistentVolumeClaim:
-          claimName: elasticsearch-pvc
+          claimName: pvc-azuredisk

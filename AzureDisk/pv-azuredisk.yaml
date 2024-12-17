@@ -4,6 +4,7 @@ metadata:
   annotations:
     pv.kubernetes.io/provisioned-by: disk.csi.azure.com
   name: pv-azuredisk
+  namespace: observability
 spec:
   capacity:
     storage: 20Gi
@@ -13,6 +14,6 @@ spec:
   storageClassName: managed-csi
   csi:
     driver: disk.csi.azure.com
-    volumeHandle: /subscriptions/d0e07c44-2b17-4f56-831d-43b704ad2754/resourceGroups/aks-rg/providers/Microsoft.Compute/disks/myAKSDiskTest
+    volumeHandle: /subscriptions/d0e07c44-2b17-4f56-831d-43b704ad2754/resourceGroups/aks-rg/providers/Microsoft.Compute/disks/myAKSDisk
     volumeAttributes:
       fsType: ext4
