@@ -9,5 +9,5 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  volumeName: pv-azuredisk
+  volumeName: elasticsearch-pv
   storageClassName: managed-csi

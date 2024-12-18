@@ -10,6 +10,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
-  volumeName: pv-azuredisk
+      storage: 20Gi
+  volumeName: elasticsearch-pv
   storageClassName: managed-csi

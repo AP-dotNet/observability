@@ -7,7 +7,7 @@ metadata:
     component: elasticsearch
 data:
   elasticsearch.yml: |
-    cluster.name: Demo-Elastic
+    cluster.name: Elastic
     node.name: Master
     path.data: /var/lib/elasticsearch/data
     http:

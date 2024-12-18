@@ -19,8 +19,6 @@ spec:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
         imagePullPolicy: IfNotPresent
         env:
-        - name: JAEGER_ENDPOINT
-          value: http://jaeger-srv-collector.observability:4317/api/traces
         - name: discovery.type
           value: single-node
         ports:
@@ -35,11 +33,11 @@ spec:
           mountPath: /var/lib/elasticsearch/data
         resources:
           limits:
-            cpu: 1000m
-            memory: 1000Mi
+            cpu: 1
+            memory: 1Gi
           requests:
-            cpu: 1000m
-            memory: 1000Mi
+            cpu: 1
+            memory: 1Gi
       # Allow non-root user to access PersistentVolume
       securityContext:
         fsGroup: 1000
@@ -52,4 +50,4 @@ spec:
           name: elasticsearch-config
       - name: elasticsearch-data
         persistentVolumeClaim:
-          claimName: pvc-azuredisk
+          claimName: elasticsearch-pvc
