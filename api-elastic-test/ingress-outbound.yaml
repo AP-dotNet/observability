@@ -5,7 +5,7 @@ metadata:
   namespace: test
 spec:
   rules:
-  - host: api-elastic.158.23.255.223.nip.io
+  - host: api-elastic.172.21.192.254.nip.io
     http:
       paths:
       - path: /WeatherForecast

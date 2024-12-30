@@ -30,8 +30,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app: cost-analyzer
 data:
-    prometheus-alertmanager-endpoint: http://prometheus.158.23.255.223.nip.io/
-    prometheus-server-endpoint: http://prometheus.158.23.255.223.nip.io/
+    prometheus-alertmanager-endpoint: http://prometheus-service.observability:9090
+    prometheus-server-endpoint: http://prometheus-service.observability:9090
     kubecost-token: not-applied
 ---
 # Source: cost-analyzer/templates/cost-analyzer-frontend-config-map-template.yaml
@@ -151,7 +151,7 @@ data:
             return 404;
         }
         location /grafana/ {
-            proxy_pass http://grafana.158.23.255.223.nip.io/grafana/;
+            proxy_pass http://grafana.158.23.251.48.nip.io/grafana/;
             proxy_redirect off;
             proxy_http_version 1.1;
             proxy_set_header Connection "";

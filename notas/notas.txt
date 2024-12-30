@@ -83,6 +83,12 @@ kubectl apply -f .\argocd\ -n management
 ejecutar el comando para obtencion de credencialles argocd.exe admin initial-password -n argocd, se reuiere cli argocd  
 
 
+kubectl config current-context
+kubectl config get-contexts
+kubectl config set-context Docker-Dektop 
+kubectl config set-context aks-test
+
+
 
 
 deploy servicio prometheus  ns observability
