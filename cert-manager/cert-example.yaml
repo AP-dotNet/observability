@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsencrypt-staging
+  namespace: default
+spec:
+  secretName: letsencrypt-staging
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  dnsNames:
+  - '*.68.155.88.26.nip.io'
+  - 'prometheus.68.155.88.26.nip.io'
