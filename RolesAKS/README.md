@@ -1,6 +1,6 @@
 # Roles y Bindings para AKS con Entra ID
 
-Este repositorio contiene varios **ClusterRoles** y **ClusterRoleBindings** diseñados para asignar permisos específicos a grupos de **Entra ID** en un cluster de **Azure Kubernetes Service (AKS)**. Cada rol cubre un conjunto de permisos que responden a diferentes necesidades dentro de un entorno de Kubernetes.
+Este repositorio contiene varios **ClusterRoles** y **Roles** diseñados para asignar permisos específicos a grupos de **Entra ID** en un cluster de **Azure Kubernetes Service (AKS)**. Cada cluster role o rol, cubre un conjunto de permisos que responden a diferentes necesidades dentro de un entorno de Kubernetes.
 
 ## Tabla de contenido
 
@@ -29,7 +29,7 @@ Este repositorio contiene varios **ClusterRoles** y **ClusterRoleBindings** dise
    El cluster debe estar configurado para la autenticación con Entra ID (Azure AD). Consulta la [documentación oficial de Azure](https://learn.microsoft.com/azure/aks/) para más detalles.
 
 3. **Grupos de Entra ID:**  
-   Debes contar con uno o varios grupos en Entra ID. Para cada grupo, obtén el **Object ID** (no el nombre amigable ni el correo). Este ID se usará en los **ClusterRoleBindings**.
+   Debes contar con uno o varios grupos en Entra ID. Para cada grupo, obtén el **Object ID**. Este ID se usará en los **ClusterRoleBindings** y **RoleBindings**.
 
 ---
 
@@ -37,10 +37,13 @@ Este repositorio contiene varios **ClusterRoles** y **ClusterRoleBindings** dise
 
 En Kubernetes, un **ClusterRole** define un conjunto de permisos que se aplican a nivel de todo el cluster. Para que esos permisos tomen efecto, se asocian (o **bindean**) a un usuario o grupo a través de un **ClusterRoleBinding**.
 
+
+En Kubernetes, un **Role** define un conjunto de permisos que se aplican a nivel namespace dentro del cluster. Para que esos permisos tomen efecto, se asocian (o **bindean**) a un usuario o grupo a través de un **RoleBinding**.
+
 La secuencia es la siguiente:
 
-1. **ClusterRole**: Determina “qué acciones” se pueden realizar y sobre “qué recursos”.
-2. **ClusterRoleBinding**: Asigna ese rol a un grupo de Entra ID, permitiendo a los miembros de ese grupo ejercer los permisos definidos.
+1. **ClusterRole** ó **Role**: Determina “qué acciones” se pueden realizar y sobre “qué recursos”.
+2. **ClusterRoleBinding** ó **RoleBinding**: Asigna ese rol a un grupo de Entra ID, permitiendo a los miembros de ese grupo ejercer los permisos definidos.
 
 ---
 
@@ -50,12 +53,16 @@ La secuencia es la siguiente:
 - **Propósito**: Otorga control total sobre todos los recursos y namespaces del cluster.  
 - **Ejemplo de Uso**: Administradores de TI con máxima autoridad para crear, modificar y eliminar cualquier objeto en Kubernetes.
 
+### Namespace Administrator
+- **Propósito**: Otorga control total sobre todos los recursos dentro de un namespace especifico.  
+- **Ejemplo de Uso**: Administradores TI a nivel namespace con máxima autoridad para crear, modificar y eliminar cualquier objeto en Kubernetes.
+
 ### Read-Only User
 - **Propósito**: Permite la visualización de recursos a nivel de cluster, sin modificar nada.  
 - **Ejemplo de Uso**: Auditores o analistas que necesiten revisar el estado del cluster y las aplicaciones.
 
 ### Developer
-- **Propósito**: Conjunto de permisos para crear, actualizar o eliminar recursos de aplicaciones (pods, servicios, deployments, etc.), pero sin acceso a configuraciones de cluster críticas.  
+- **Propósito**: Conjunto de permisos para crear, actualizar o eliminar recursos de aplicaciones (pods, servicios, deployments, etc.), pero sin acceso a configuraciones de cluster críticas y a nivel namespace.  
 - **Ejemplo de Uso**: Equipos de desarrollo que publican e iteran sobre sus aplicaciones.
 
 ### Log Viewer
@@ -65,10 +72,6 @@ La secuencia es la siguiente:
 ### Network Manager
 - **Propósito**: Otorga permisos para gestionar servicios, ingresses, endpoints y políticas de red.  
 - **Ejemplo de Uso**: Ingenieros que configuran y mantienen la capa de red de las aplicaciones.
-
-### Observability Manager
-- **Propósito**: Permite configurar y gestionar recursos de observabilidad como Prometheus, Alertmanager, y colectores de logs.  
-- **Ejemplo de Uso**: Equipos de SRE o DevOps enfocados en monitorización y alertas.
 
 ### Storage Manager
 - **Propósito**: Gestiona recursos relacionados con almacenamiento (PersistentVolumes, PersistentVolumeClaims, StorageClasses, etc.).  
