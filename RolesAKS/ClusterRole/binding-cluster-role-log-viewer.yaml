@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: log-viewer-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: log-viewer
+subjects:
+  - kind: Group
+    name: <ID_DEL_GRUPO_ENTRA_ID>
+    apiGroup: rbac.authorization.k8s.io
